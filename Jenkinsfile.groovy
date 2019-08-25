@@ -60,12 +60,12 @@ pipeline{
         }
         stage("Pull Repo"){
             steps{
-                git("https://github.com/dilfuza97/Packer_Terraform.git")
+                git("https://github.com/dilfuza97/Packer-image.git")
             }
         }
         stage("Build Image"){
             steps{
-              //sh "packer build updated/updated.json"
+              //sh "packer build update/update.json"
              echo "Hello"
          }
      }

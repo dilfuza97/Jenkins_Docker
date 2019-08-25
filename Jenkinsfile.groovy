@@ -65,12 +65,17 @@ pipeline{
         }
         stage("Build Image"){
             steps{
-                sh "packer build Updated/ami.json"
-              }
-          }
-      }
-      post{
-        success {
-            mail to:  "ibaidullaeva1997@gmail.com", subject: "job", body: "job completed"
-      }
-  }
+              //sh "packer build updated/updated.json"
+             echo "Hello"
+         }
+     }
+ }
+ post{
+     success {
+         echo "Done"
+     }
+     failure {
+         mail to:  "farrukhsadykov@gmail.com", subject: "job", body: "job completed"
+     }
+ }
+}

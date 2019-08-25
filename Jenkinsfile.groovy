@@ -48,15 +48,21 @@ pipeline{
                             sh "unzip -o packer_1.4.3_linux_amd64.zip"
                             sh "sudo mv packer /bin"
                             sh "packer version"
-                        } else {
-                            sh "wget https://releases.hashicorp.com/packer/1.4.3/packer_1.4.3_linux_amd64.zip"
-                            sh "unzip -o packer_1.4.3_linux_amd64.zip"
-                            sh "sudo mv packer /bin"
-                            sh "packer version"
+                            } else {
+                                sh "wget https://releases.hashicorp.com/packer/1.4.3/packer_1.4.3_linux_amd64.zip"
+                                sh "unzip -o packer_1.4.3_linux_amd64.zip"
+                                sh "sudo mv packer /bin"
+                                sh "packer version"
+                            }
                         }
                     }
                 }
             }
+            stage("Pull Repo"){
+                steps{
+                    git("https://github.com/dilfuza97/Packer-image.git")
+                    sh "ls"
+                }
+            }
         }
     }
-}

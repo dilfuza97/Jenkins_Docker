@@ -68,7 +68,7 @@ pipeline{
         stage("Clone VPC Repo"){
             steps{
                 ws("terraform/"){
-                    git "https://github.com/farrukh90/infrastructure_april.git"
+                    git "https://github.com/dilfuza97/Vpc_Management_Terraforms.git"
                 }
             }
         }
@@ -99,7 +99,7 @@ pipeline{
             echo "Done"
         }
         failure {
-            mail to:  "farrukhsadykov@gmail.com", subject: "job", body: "job completed"
+            mail to:  "ibaidullaeva1997@gmail.com", subject: "job", body: "job completed"
         }
     }
 }

@@ -16,7 +16,7 @@ pipeline{
             steps{
                 ws("tmp/"){
                     script {
-                        def exists = fileExists 'terraform_0.11._linux_amd64.zip'
+                        def exists = fileExists 'terraform_0.11.9_linux_amd64.zip'
                         if (exists) {
                             sh "unzip -o terraform_0.11.9_linux_amd64.zip"
                             sh "sudo mv terraform /bin"

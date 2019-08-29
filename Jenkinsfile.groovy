@@ -70,23 +70,24 @@ pipeline{
                     git "https://github.com/dilfuza97/Vpc_Management_Terraforms.git"
                     sh "pwd"
                     sh "ls"
-                }
-            }
-        }
-        stage("Clone VPC Repo"){
-                   steps{
-                       ws("terraform/"){
-                           sh "terraform plan --var-file=dev.tfvars"
-                       }
+                  }
+               }
+           }
+           stage("Build VPC "){
+               steps{
+                   ws("terraform/"){
+                       sh "terraform get"
+                       sh "terraform init"
                    }
                }
            }
-           post{
-               success {
-                   echo "Done"
-               }
-               failure {
-                   mail to:  "ibaidullaeva1997@gmail.com", subject: "job", body: "job completed"
-               }
+       }
+       post{
+           success {
+               echo "Done"
+           }
+           failure {
+               mail to:  "farrukhsadykov@gmail.com", subject: "job", body: "job completed"
            }
        }
+   }

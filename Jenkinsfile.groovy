@@ -24,7 +24,7 @@ pipeline{
                         } else {
                             sh "wget https://releases.hashicorp.com/terraform/0.11.9/terraform_0.11.9_linux_amd64.zip"
                             sh "unzip -o terraform_0.11.9_linux_amd64.zip"
-                            sh "sudo mv terraform /bin"
+                            sh "sudo mv -f terraform /bin"
                             sh "terraform version"
                         }
                     }
@@ -58,24 +58,35 @@ pipeline{
                 }
             }
         }
-        stage("Pull Repo"){
-            steps{
-                git("https://github.com/dilfuza97/Packer-image.git")
-            }
-        }
         stage("Build Image"){
             steps{
-              //sh "packer build update/update.json"
-             echo "Hello"
-         }
-     }
- }
- post{
-     success {
-         echo "Done"
-     }
-     failure {
-         mail to:  "ibaidullaeva1997@gmail.com", subject: "job", body: "job completed"
-     }
- }
-}
+                //sh "packer build updated/updated.json"
+                echo "Hello"
+            }
+        }
+        stage("Build VPC"){
+            steps{
+                ws("terraform/"){
+                    git "https://github.com/dilfuza97/Vpc_Management_Terraforms.git"
+                    sh "pwd"
+                    sh "ls"
+                }
+            }
+        }
+        stage("Clone VPC Repo"){
+                   steps{
+                       ws("terraform/"){
+                           sh "terraform plan --var-file=dev.tfvars"
+                       }
+                   }
+               }
+           }
+           post{
+               success {
+                   echo "Done"
+               }
+               failure {
+                   mail to:  "ibaidullaeva1997@gmail.com", subject: "job", body: "job completed"
+               }
+           }
+       }

@@ -1,6 +1,6 @@
 pipeline{
     agent any
-    properties([parameters([string(defaultValue: 'plan', description: 'plan/apply', name: 'USER_ACTION', trim: true)])])
+    parameters {string(defaultValue: "plan", description: "plan or apply", name: 'USER_ACTION')}
     stages{
         stage("Run Command"){
             steps{
@@ -17,14 +17,14 @@ pipeline{
             steps{
                 ws("tmp/"){
                     script {
-                        def exists = fileExists 'terraform_0.11.9_linux_amd64.zip'
+                        def exists = fileExists 'terraform_0.12.7_linux_amd64.zip'
                         if (exists) {
-                            sh "unzip -o terraform_0.11.9_linux_amd64.zip"
+                            sh "unzip -o terraform_0.12.7_linux_amd64.zip"
                             sh "sudo mv -f terraform /bin"
                             sh "terraform version"
                         } else {
-                            sh "wget https://releases.hashicorp.com/terraform/0.11.9/terraform_0.11.9_linux_amd64.zip"
-                            sh "unzip -o terraform_0.11.9_linux_amd64.zip"
+                            sh "wget https://releases.hashicorp.com/terraform/0.12.7/terraform_0.12.7_linux_amd64.zip"
+                            sh "unzip -o terraform_0.12.7_linux_amd64.zip"
                             sh "sudo mv -f terraform /bin"
                             sh "terraform version"
                         }
@@ -65,13 +65,11 @@ pipeline{
                 echo "Hello"
             }
         }
-        stage("Build VPC"){
+        stage("Clone VPC Repo"){
             steps{
                 ws("terraform/"){
-                    git "https://github.com/dilfuza97/Vpc_Management_Terraforms.git"
-                    sh "pwd"
-                    sh "ls"
-                  }
+                    git "https://github.com/farrukh90/infrastructure_april.git"
+                }
             }
         }
         stage("Get module"){
@@ -101,7 +99,7 @@ pipeline{
             echo "Done"
         }
         failure {
-            mail to:  "ibaidullaeva1997@gmail.com", subject: "job", body: "job completed"
+            mail to:  "farrukhsadykov@gmail.com", subject: "job", body: "job completed"
         }
     }
 }
